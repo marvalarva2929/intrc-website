@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <title>Document</title>
+
+</head>
+    <body>
+
+        <!-- <script src="https://unpkg.com/react@18.1.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> -->
+        
+        <script src="react/react.js"></script>
+        <script src="react/react-dom.js"></script>
+        <script src="react/babel.js"></script>
+       
+
+
+        <div id="page"></div>
+    
+        <script type="text/babel">
+
+        class Page extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                    emailForm: '', 
+                    showEmailConfirmation: false,
+                    showContactConfirmation: false,
+                    nameData: "",
+                    emailData: "",
+                    mobileData: "",
+                    companyData: "",
+                    commentData: "", 
+                };
+                this.onSubmit = this.onSubmit.bind(this);
+                this.buttonHandler = this.buttonHandler.bind(this);
+            }
+
+            onSubmit = e => {
+                e.preventDefault();
+                this.setState({
+                    ...this.state,
+                    showEmailConfirmation: true,
+                    emailForm: ""
+                })
+            }
+
+            onChange = e => {
+                this.setState({
+                    ...this.state,
+                    showEmailConfirmation: false,
+                    emailForm: e.target.value
+                })
+            }
+
+            buttonHandler = e => {
+                if (this.state.openPrompt == e.target.id)
+                    this.setState({
+                        ...this.state,
+                        openPrompt: ""
+                    })
+                else this.setState({ 
+                    ...this.state,
+                    openPrompt: e.target.id
+                })
+            }
+
+            contactFormSubmitHandler = e => {
+                e.preventDefault();
+                this.setState({
+                    ...this.state,
+                    nameData: "",
+                    emailData: "",
+                    mobileData: "",
+                    companyData: "",
+                    commentData: "",
+                    showContactConfirmation: true,
+                })
+            }
+
+            contactFormDataUpdate = e => {
+                this.setState({
+                    ...this.state,
+                    showContactConfirmation: false,
+                })
+                switch(e.target.id) {
+                    case 'name':
+                        this.setState({
+                            ...this.state,
+                            nameData: e.target.value,
+                        })
+                        break;
+                    case 'email':
+                        this.setState({
+                            ...this.state,
+                            emailData: e.target.value,
+                        })
+                        break;
+                    case 'mobile':
+                        this.setState({
+                            ...this.state,
+                            mobileData: e.target.value,
+                        })
+                        break;
+                    case 'company':
+                        this.setState({
+                            ...this.state,
+                            companyData: e.target.value,
+                        })
+                        break;
+                    case 'comments':
+                        this.setState({
+                            ...this.state,
+                            commentData: e.target.value,
+                        })
+                        break;
+                }
+            }
+
+            animationSpeeds = "0.4s"; // css transition speed
+
+            showEmailConf = {
+                opacity: "1",
+                color: "red",
+                transformProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            hideEmailConf = {
+                opacity: "0",
+                color: "red",
+                transformProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            whiteText = {
+                color: "white",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            blackText = {
+                color: "black",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            openPrompt = {
+                height: "30rem",
+                backgroundColor: "#333333",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            closedPrompt = {
+                height: "12rem",
+                backgroundColor: "white",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            showPromptContent = {
+                fontSize: "2rem",
+                color: "white",
+                opacity: "1",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            hidePromptContent = {
+                fontSize: "1rem",   
+                color: "white",
+                opacity: "0",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            rotatedArrow = {
+                transform: "rotate(45deg)",
+                color: "white",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            normalArrow = {
+                transform: "rotate(0deg)",
+                color: "black",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            showContactConf = {
+                fontSize: "1.3rem",
+                marginTop: "1rem",
+                color: "red",
+                opacity: "1",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+            hideContactConf = {
+                fontSize: "1.3rem",
+                marginTop: "1rem",
+                color: "red",
+                opacity: "0",
+                transitionProperty: "all",
+                transitionDuration: this.animationSpeeds,
+            }
+
+
+
+            render(){
+                return(
+                    <div>
+                        <div className="nav-wrapper">
+                            <div className="nav-content-wrapper">
+                                <div className="nav-logo-wrapper">
+                                    <img style={{width:"10rem"}}src="logo.png"/>
+                                </div>
+
+                                <div className="nav-button-wrapper">
+                                    <div className="nav-button bolded-nav"> <a href=""> <h3> Home </h3> </a> </div>
+                                    <div className="nav-button not-bolded-nav"> <a href=""> <h3> About </h3> </a> </div>
+                                    <div className="nav-button not-bolded-nav"> <a href=""> <h3> Services </h3> </a> </div>
+                                    <div className="nav-button not-bolded-nav"> <a href=""> <h3> Contact </h3> </a> </div>
+                                </div>
+
+                                <div className="nav-contact-button"> <button> Get in Touch </button> </div>
+                            </div>
+                        </div>
+                        <div className="home-wrapper">
+
+                            <div className="landing-wrapper">
+                                <div className="landing-title">
+                                    <h1> Fast-track your digital brand </h1>
+                                </div>
+                                <div className="landing-subtitle">
+                                    <h2> We offer superior strategies to maximize your digital reach and connect with your audience across channels </h2>
+                                </div>
+                                <div className="landing-form">
+                                        <form onSubmit = {this.onSubmit}>
+                                            <div className="form-input"> <input value = {this.state.emailForm} onChange = {this.onChange} type = "text" ref = {element => this.emailInput = element}placeholder="Enter your email"/> </div>
+                                        <button> Get in Touch </button>
+                                        <div className="email-confirmation_text"> <p style = {this.state.showEmailConfirmation ? this.showEmailConf : this.hideEmailConf}> Email Received </p> </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div className="picture-wrapper">
+                                <img alt = "background-picture" src="background.png"/>
+                            </div>
+
+                            <div className="about-wrapper">
+
+                                <div className="about-left">
+                                    <div className="about-title">
+                                        <h2>Who we are? </h2>
+                                    </div>
+                                    <div className="about-content">
+                                        <p> INTRC Consultants LLC is on a mission to empower small business owners and entrepreneurs with the right tools and solutions to establish a successful digital brand. We help you quickly reach your target audience, engage effectively on social media, drive traffic to your website, and build a strong online presence. Trust us to take your small business to new heights. </p>
+                                    </div>
+                                </div>
+
+                                <div className="about-right">
+                                    <div className="about-video">
+                                        <iframe width="500" height="500" src="https://www.youtube.com/embed/d5PTB0plW0M" title="How To Start A Business In The USA With INTRC" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div className="we_do-wrapper">
+                                <div className="we-left">
+                                    <h1> Our Services </h1>
+                                    <p> A DIY approach to digital marketing is time-consuming and may not give you the desired results. That’s why you need a partner who can work with you to ensure your marketing needs are met with precision and excellence. Contact us today for a customized plan. </p>
+                                    <div className = "we-left-img"> <img src = "decorationImage.png"/> </div>
+                                </div>
+                                <div className="we-right">
+                                    <div className="we-buttons"> 
+
+                                        <div id = "branding" style = {this.state.openPrompt == "branding" ? this.openPrompt : this.closedPrompt} className="we-branding we-button"> 
+                                            <div onClick = {this.buttonHandler} id = 'branding' className = "prompt-title"> 
+                                                <p onClick = {this.buttonHandler} id = 'branding' style = {this.state.openPrompt == 'branding' ? this.whiteText : this.blackText}> Branding </p> 
+                                                <p onClick = {this.buttonHandler} id = 'branding' style = {this.state.openPrompt == 'branding' ? this.rotatedArrow : this.normalArrow} > &#129125; </p>
+                                            </div>  
+                                            <div onClick = {this.buttonHandler} id = 'branding' className = "prompt-data">
+                                                <p style = {this.state.openPrompt == 'branding' ? this.showPromptContent : this.hidePromptContent}> From website design to graphics, logo, and front-end development, we work with our clients to provide responsive and visually appealing design services. </p>
+                                            </div>
+                                        </div>
+
+                                        <div onClick = {this.buttonHandler} id = "content" style = {this.state.openPrompt == "content" ? this.openPrompt : this.closedPrompt} className="we-branding we-button"> 
+                                            <div onClick = {this.buttonHandler} id = 'content' className = "prompt-title"> 
+                                                <p onClick = {this.buttonHandler} id = 'content' style = {this.state.openPrompt == 'content' ? this.whiteText : this.blackText}> Content & SEO </p> 
+                                                <p onClick = {this.buttonHandler} id = 'content' style = {this.state.openPrompt == 'content' ? this.rotatedArrow : this.normalArrow} > &#129125; </p>
+                                            </div>  
+                                            <div onClick = {this.buttonHandler} id = 'content' className = "prompt-data">
+                                                <p style = {this.state.openPrompt == 'content' ? this.showPromptContent : this.hidePromptContent}> Get SEO-focused quality content that will improve search engine rankings, build awareness, and drive more qualified leads to your website. </p>
+                                            </div>                                        
+                                        </div>
+
+                                        <div onClick = {this.buttonHandler} id = "design" style = {this.state.openPrompt == "design" ? this.openPrompt : this.closedPrompt} className="we-branding we-button"> 
+                                            <div onClick = {this.buttonHandler} id = 'design' className = "prompt-title"> 
+                                                <p onClick = {this.buttonHandler} id = 'design' style = {this.state.openPrompt == 'design' ? this.whiteText : this.blackText}> Social Media Management </p> 
+                                                <p onClick = {this.buttonHandler} id = 'design' style = {this.state.openPrompt == 'design' ? this.rotatedArrow : this.normalArrow} > &#129125; </p>
+                                            </div>  
+                                            <div onClick = {this.buttonHandler} id = 'design' className = "prompt-data">
+                                                <p style = {this.state.openPrompt == 'design' ? this.showPromptContent : this.hidePromptContent}> From the creation of content to regular engagement with followers on Facebook, Instagram, and others, we focus on improving brand awareness and traffic to your website. </p>
+                                            </div>                
+                                        </div>
+
+                                        <div onClick = {this.buttonHandler} id = "marketing" style = {this.state.openPrompt == "marketing" ? this.openPrompt : this.closedPrompt} className="we-branding we-button"> 
+                                            <div onClick = {this.buttonHandler} id = 'marketing' className = "prompt-title"> 
+                                                <p onClick = {this.buttonHandler} id = 'marketing' style = {this.state.openPrompt == 'marketing' ? this.whiteText : this.blackText}> Email Marketing </p> 
+                                                <p onClick = {this.buttonHandler} id = 'marketing' style = {this.state.openPrompt == 'marketing' ? this.rotatedArrow : this.normalArrow} > &#129125; </p>
+                                            </div>  
+                                            <div onClick = {this.buttonHandler} id = 'marketing' className = "prompt-data">
+                                                <p style = {this.state.openPrompt == 'marketing' ? this.showPromptContent : this.hidePromptContent}> Send targeted messages to your audience and improve your chances of engagement and conversion with email marketing, including email list building, campaign creation, and management. </p>
+                                            </div>    
+                                        </div>
+
+                                        <div onClick = {this.buttonHandler} id = "technology" style= {this.state.openPrompt == "technology" ? this.openPrompt : this.closedPrompt} className="we-branding we-button"> 
+                                            <div onClick = {this.buttonHandler} id = 'technology' className = "prompt-title"> 
+                                                <p onClick = {this.buttonHandler} id = 'technology' style = {this.state.openPrompt == 'technology' ? this.whiteText : this.blackText}> Pay-per-click services </p> 
+                                                <p onClick = {this.buttonHandler} id = 'technology' style = {this.state.openPrompt == 'technology' ? this.rotatedArrow : this.normalArrow} > &#129125; </p>
+                                            </div>  
+                                            <div onClick = {this.buttonHandler} id = 'technology' className = "prompt-data">
+                                                <p style = {this.state.openPrompt == 'technology' ? this.showPromptContent : this.hidePromptContent}> Drive more traffic to your website, increase brand awareness, and generate leads and sales with an effective pay-per-click advertising service. </p>
+                                            </div>          
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="choose_us-wrapper">
+                                <div className="choose-left"> 
+                                    <div className="choose-section">
+                                        <div className="choose-section-title"> <h1 style={{fontSize: "4rem"}}> Why Choose Us? </h1> </div>
+                                        <div className="choose-section-subtitle"> <p> Our unique qualities speak for us </p> </div>
+                                    </div>
+                                    <div className="choose-section">
+                                        <div className="choose-section-title"> <h1> Diverse Network </h1> </div>
+                                        <div className="choose-section-subtitle"> <p> A dynamic team of individuals with a diverse range of skills and expertise, united in our mission to drive success for our clients. </p> </div>
+                                    </div>
+                                    <div className="choose-section">
+                                        <div className="choose-section-title"> <h1> Affordable Cost </h1> </div>
+                                        <div className="choose-section-subtitle"> <p> Our services are designed to deliver outstanding results at reasonable prices, making digital marketing accessible and effective for businesses of all sizes. </p> </div>
+                                    </div>
+                                </div>
+                                <div className="choose-right"> 
+                                    <div className="choose-image-section">
+                                        <div className="choose-image">
+                                            <img src="decorationImage2.png"/>
+                                        </div>
+                                    </div>
+                                    <div className="choose-section-right">
+                                        <div className="choose-section-title"> <h1> Transparency </h1> </div>
+                                        <div className="choose-section-subtitle"> <p>  You can expect clear and open communication, reasonable pricing, and a clear understanding of the strategies and tactics we use to drive success for your brand. </p> </div>
+                                    </div>
+                                    <div className="choose-section-right">
+                                        <div className="choose-section-title"> <h1> Easy Setup </h1> </div>
+                                        <div className="choose-section-subtitle"> <p> Signing up is easy and stress-free. Book a consultation today, and our team will guide you through the process. </p> </div>
+                                    </div>    
+                                </div>
+                            </div>
+                            <div className="contact-wrapper">
+                                <div className="contact-left"> 
+                                    <div className="contact-header"> <h1 style = {{fontSize: "5rem"}}> Book a Consultation </h1> </div>
+                                    <div className="contact-content"> <p> Fast-track your digital brand with INTRC Consultants. We can help you create a visually appealing website, implement successful email marketing strategies, develop content, and more. With INTRC at the helm, you can stay focused on what you do best - your business - while we handle the rest. Connect with us now! </p> </div>
+                                    <div className="contact-mail"> <h2 style = {{fontSize: "2rem"}}> username@companyname.com </h2> </div>
+                                    <div className="contact-number"> <h2 style = {{fontSize: "2rem"}}> (+123) 1234 5678 </h2> </div>
+                                </div>
+                                <div className="contact-right"> 
+                                    <div className="contact-form-wrapper">
+                                        <form onSubmit = {this.contactFormSubmitHandler}> 
+                                            <input id = 'name' placeholder="Name" type="text" value = {this.state.nameData} onChange={this.contactFormDataUpdate}/>
+                                            <input id = 'email' placeholder="Email" type="text" value = {this.state.emailData} onChange={this.contactFormDataUpdate}/> 
+                                            <input id = 'mobile' placeholder="Mobile" type="text" value = {this.state.mobileData} onChange={this.contactFormDataUpdate}/>
+                                            <input id = 'company' placeholder="Company Name" type="text" value = {this.state.companyData} onChange={this.contactFormDataUpdate}/> 
+                                            <input id = 'comments' style = {{height: "12rem", paddingBottom:  "6rem"}} value = {this.state.commentData} placeholder="Comments" type="text" onChange={this.contactFormDataUpdate}/> 
+                                            <div className = "contact-form-button"> <button type = "submit" > Get In Touch </button> </div>
+                                        </form>
+                                        <p style={this.state.showContactConfirmation ? this.showContactConf : this.hideContactConf}> Thank you for contacting! We will be in touch with you shortly. </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="footer-wrapper">
+                                <div className="footer-description">
+                                    <p> 
+                                        INTRC Consultants LLC is on a mission to empower small business owners and entrepreneurs with the right tools and solutions to establish a successful digital brand. 
+                                    </p>    
+                                </div>
+                                <div className="footer-main">
+                                    <h1> Main </h1>
+                                    <h2> Home </h2> 
+                                    <h2> About </h2>
+                                    <h2> Services </h2>
+                                    <h2> Contact </h2>
+                                </div>
+        
+                                <div className="footer-main">
+                                    <h1> Services </h1>
+                                    <h2> International Business </h2>
+                                    <h2> Virtual Office </h2>
+                                    <h2> Small Business </h2>
+                                </div>
+                                <div className="footer-main"> 
+                                <h1> Social Media </h1>
+                                <h2> LinkedIn </h2>
+                                <h2> Twitter </h2>
+                                <h2> YouTube </h2>
+                                <h2> FaceBook </h2>
+                                <h2> Instagram </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="copyright-wrapper"> 
+                            <p> © 2022 - 2022 INTRC. All Rights Reserved. </p>
+                        </div>
+                    </div>
+                )   
+            }
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('page'))
+        root.render(<Page/>)
+        </script>
+
+
+    </body>
+</html> 
